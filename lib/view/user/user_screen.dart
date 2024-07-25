@@ -6,9 +6,9 @@ import 'package:http/http.dart' as http;
 
 class UserScreen extends StatelessWidget {
   UserScreen({super.key});
-  List<UserDetail> userList = [];
   @override
   Widget build(BuildContext context) {
+    List<UserDetail> userList = [];
 
     ///API Calling...
     Future<List<UserDetail>> getUserApi() async {
@@ -31,17 +31,24 @@ class UserScreen extends StatelessWidget {
         title: const Text('User Screen'),
         centerTitle: true,
       ),
-      body: FutureBuilder(
-        future: getUserApi(),
-        builder: (context, snapshot) {
-          return ListView.builder(
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(''),
-              );
-            },
-          );
-        },
+      body: Expanded(
+        child: FutureBuilder(
+          future: getUserApi(),
+          builder: (context, AsyncSnapshot<List<UserDetail>> snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              return ListView.builder(
+                  itemCount: userList.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(snapshot.data![index].name),
+                      subtitle: Text(snapshot.data![index].id.toString()),
+                    );
+                  });
+            }
+          },
+        ),
       ),
     );
   }
