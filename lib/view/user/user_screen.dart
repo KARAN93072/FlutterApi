@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_api/models/user_model/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class UserScreen extends StatelessWidget {
@@ -17,7 +16,7 @@ class UserScreen extends StatelessWidget {
       var data = jsonDecode(response.body.toString());
       if (response.statusCode == 200) {
         for (var i in data) {
-          UserDetail userDetail = UserDetail(name: i['name'], id: i['id']);
+          UserDetail userDetail = UserDetail(name: i['name'], id: i['id'], username: i['username']);
           userList.add(userDetail);
         }
       } else {
@@ -55,7 +54,7 @@ class UserScreen extends StatelessWidget {
 }
 
 class UserDetail {
-  String name;
+  String name, username;
   int id;
-  UserDetail({required this.name, required this.id});
+  UserDetail({required this.name, required this.id, required this. username});
 }
