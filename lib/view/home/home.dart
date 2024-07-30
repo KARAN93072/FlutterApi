@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_api/models/post_model/post_model.dart';
 import 'package:flutter_api/models/post_model/post_model2.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,7 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<PostModel2> postList2 = [];
   Future<List<PostModel2>> getPostApi2() async {
     final response =
-        await http.get(Uri.parse("https://jsonplaceholder.org/commentss"));
+        await http.get(Uri.parse("https://jsonplaceholder.org/comments"));
     var data = jsonDecode(response.body.toString());
     if (response.statusCode == 200) {
       for (var i in data) {
@@ -45,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: postList2.length,
                       itemBuilder: (context, index) {
                         return ListTile(
-                          title: Text('ID: ${postList2[index].userId}'),
+                          title: Text('User ID: ${postList2[index].userId}'),
                           subtitle:
                               Text('Comment: ${postList2[index].comment}'),
                         );
